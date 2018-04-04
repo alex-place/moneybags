@@ -59,7 +59,7 @@ body* > {
     margin-top: 56px;
     border-radius: 25px;
     box-sizing: border-box;
-    box-shadow: -8px 9px 16px -3px gray;
+    border: 3px solid #185623;
     background: #171314;  
 }
  .card-background {
@@ -95,18 +95,14 @@ body* > {
 .frame-header,
 .frame-art,
 .frame-type-line {
-    box-shadow: 
-        0 0 0 2px #171314,
-        0 0 0 5px #26714A,
-        -3px 3px 2px 5px #171314;
+	border: 3px solid #185623;
 
     margin-bottom: 7px;
 }
 
 .frame-text-box {
-    box-shadow: 
-        0 0 0 5px #26714A,
-        -3px 3px 2px 5px #171314;
+        border: 3px solid #185623;
+
 }
 
 /*
@@ -175,7 +171,7 @@ body* > {
     background: #ADD3AC;
     border-radius: 50%;
     box-sizing: border-box;
-    box-shadow: -0.05em 0.12em 0px 0 black;
+    border: 3px solid #185623;
     margin-right: 5px;
     height: 20px;
     align-self: center;
@@ -249,8 +245,7 @@ fbi-left {
     z-index: 2;
     background: lightgray;
     background-image: url(https://image.ibb.co/jyq34n/holofoil_texture_2.jpg);
-    box-shadow: 
-        0 0 0 4px #171314;
+    border: 3px solid #185623;
 }
 .inner-margins {
     margin: 0 10px;

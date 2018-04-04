@@ -1,14 +1,32 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="template.css">
+<script type="text/javascript" src="html2canvas.min.js"></script>
 <head>
     <title>Encounter Builder</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 
+<script>
+	function captureCard(){
+		html2canvas(document.querySelector("#capture"),
+				{allowTaint: true}
+		).then(canvas => {
+			var style = canvas.style;
+			style.marginLeft = "auto";
+			style.marginRight = "auto";
+		    document.body.appendChild(canvas)
+		    var parentStyle = canvas.parentElement.style;
+			parentStyle.textAlign = "center";
+		});
+	}
+</script>
+
+
+
 <h1>Result</h1>
-	<div class="card-container">
+	<div class="card-container" id="capture">
 
 		<div class="card-background">
 
@@ -71,4 +89,7 @@
 		</div>
 
 	</div>
+	
+	<input type="button" value="Save" onclick="captureCard()" /><br/>
+	
 </body>
