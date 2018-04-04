@@ -129,7 +129,7 @@ body* > {
 .card-frame {
     z-index: 1;
     position: relative;
-    height: 108%;
+    height: auto;
     max-width: 97%;
     left: 1%;
     top: 0.5%;
