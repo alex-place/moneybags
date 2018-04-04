@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="template.css">
+<head>
+    <title>Encounter Builder</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+<h1>Result</h1>
+	<div class="card-container">
+
+		<div class="card-background">
+
+			<div class="card-frame">
+
+				<div class="frame-header">
+					<h1 class="name" th:text="${encounterValue.name}">Name</h1>
+						
+					<i th:text=" '(' + ${encounterValue.type} + ')'">(type)</i> <i class="ms ms-g" id="mana-icon"></i>
+				</div>
+
+				<!-- Direct link to image art contained in double quotes -->
+				<img class="frame-art" th:src="${encounterValue.background}"
+					alt="art">
+
+				<div class="frame-type-line">
+					<h1 class="type" th:text="${encounterValue.rarity}">
+						<!-- Card Type -->
+						Common Creature
+
+					</h1>
+
+					<h1 class="type" th:text="'&#9829;' + ${encounterValue.toughness} + '&#9876;' + ${encounterValue.power}"> &#9829;1 &#9876; 1</h1>
+
+				</div>
+
+				<!-- Card Text Box
+				classes: description, flavour-text
+			  -->
+				<div class="frame-text-box">
+					<p class="description ftb-inner-margin" th:text="${encounterValue.description}"></p>
+					<p class="flavour-text" th:text="${encounterValue.flavor}"></p>
+				</div>
+
+				<div class="frame-bottom-info inner-margin">
+					<div class="fbi-left">
+
+						<p th:text="${encounterValue.print}">
+							<!-- Print Run -->
+							1st Ed Test Run
+						</p>
+
+						<p>
+							TST &#x2022; <img class="paintbrush"
+								src="https://image.ibb.co/e2VxAS/paintbrush_white.png"
+								alt="paintbrush icon">
+							<!-- Artist Name -->
+							 <p th:text="${encounterValue.artist}" th:remove="tag"> Artist Name </p>
+						</p>
+					</div>
+
+					<div class="fbi-center"></div>
+
+					<div class="fbi-right">&#x99; &amp; &#169; 2018 Project
+						Moneybags</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</div>
+</body>

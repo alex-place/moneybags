@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Encounter Builder</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Encounter Builder</h1>
+	<form action="#" th:action="@{/encounterbuilder}"
+		th:object="${encounterValue}" method="post">
+
+		<p>
+			Name: <input type="text" th:field="*{name}" />
+		</p>
+		<p>
+			Type: <input type="text" th:field="*{type}" />
+		</p>
+		<p>
+			Background: <input type="text" th:field="*{background}" />
+		</p>
+		<p>
+			Rarity: <input type="text" th:field="*{rarity}" />
+		</p>
+		<p>
+			Toughness: <input type="text" th:field="*{toughness}" />
+		</p>
+		<p>
+			Power: <input type="text" th:field="*{power}" />
+		</p>
+		<p>
+			Description: <input type="text" th:field="*{description}" />
+		</p>
+		<p>
+			Flavor: <input type="text" th:field="*{flavor}" />
+		</p>
+		<p>
+			Print: <input type="text" th:field="*{print}" />
+		</p>
+		<p>
+			Collection: <input type="text" th:field="*{collection}" />
+		</p>
+		<p>
+			Collection Icon Url: <input type="text" th:field="*{collectionUrl}" />
+		</p>
+		<p>
+			Artist Name: <input type="text" th:field="*{artist}" />
+		</p>
+
+		<p>
+			<input type="submit" value="Submit" /> <input type="reset"
+				value="Reset" />
+		</p>
+
+
+	</form>
+</body>
+</html>
