@@ -69,7 +69,7 @@ body* > {
     border-top-right-radius: 6px;
     border-bottom-left-radius: 8%;
     border-bottom-right-radius: 8%;
-    background-image: url(https://image.ibb.co/e1XKAS/green_background.jpg);
+    background-image: url(/images/green_background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -144,7 +144,7 @@ body* > {
 .frame-type-line {
     background: 
         linear-gradient( 0deg, rgba(201, 216, 201, .3), rgba(201, 216, 209, .3) ), 
-        url(https://image.ibb.co/jKByZn/tile_bg_1.jpg);     
+        url(/images/tile_bg.jpg);     
     display: flex;
     margin-top: 10px;
     margin-left: 5px;
@@ -195,7 +195,7 @@ body* > {
 .frame-text-box {
     margin: 0 10px;
     background: #d3ded6;
-    background-image: url(https://image.ibb.co/dFcNx7/tile_bg_2.jpg);
+    background-image: url(/images/tile_bg_2.jpg));
     display: flex;
     flex-direction: column;
     justify-content: space-around;    
@@ -244,7 +244,7 @@ fbi-left {
     bottom: 11px;
     z-index: 2;
     background: lightgray;
-    background-image: url(https://image.ibb.co/jyq34n/holofoil_texture_2.jpg);
+    background-image: url(/images/holofoil_texture_2.jpg);
     border: 3px solid #185623;
 }
 .inner-margins {

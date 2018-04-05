@@ -2,30 +2,103 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="template.css">
 <script type="text/javascript" src="html2canvas.min.js"></script>
+<script type="text/javascript" src="github.bundle.js"></script>
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
 <head>
-    <title>Encounter Builder</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Encounter Builder</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 
-<script>
+	<script th:inline="javascript">
+	document.addEventListener("DOMContentLoaded", function() {
+		//addBackground();
+		});
+	
+	
+	function ajaxPushImage(canvas){
+		
+		var data = 'canvas='
+            + encodeURIComponent(canvas)
+            ;
+		
+		 $.ajax({
+             url : 'encounterbuilder/push',
+             data : data,
+             type : "GET",
+
+             success : function(response) {
+                 alert( response );
+             },
+             error : function(xhr, status, error) {
+                 alert(xhr.responseText);
+             }
+         });
+	}
+	
+	function addBackground(){
+		/*<![CDATA[*/
+		
+		    var url = /*[[${encounterValue.background}]]*/ 'default';
+			var img = new Image();
+			img.crossOrigin = "anonymous";
+			img.src = url;
+			
+			var divFrame = document.getElementById('divFrame');
+			divFrame.appendChild(img);
+			
+		/*]]>*/
+		
+	}
+		
+	//Creates a new instance of the Github object exposed by Github.js
+	var github = new GitHub({
+	  username: 'alex-place',
+	  password: 'Infected1',
+	  auth: 'basic'
+	});
+	
+	 
+	// Creates an object representing the repository you want to work with
+	var repository = github.getRepo('alex-place', 'moneybags');
+	
 	function captureCard(){
 		html2canvas(document.querySelector("#capture"),
-				{allowTaint: true}
+				{allowTaint: false}
 		).then(canvas => {
 			var style = canvas.style;
 			style.marginLeft = "auto";
 			style.marginRight = "auto";
+			canvas.id = "h2canvas";
 		    document.body.appendChild(canvas)
 		    var parentStyle = canvas.parentElement.style;
 			parentStyle.textAlign = "center";
 		});
 	}
+	
+	
+	function pushImage(){
+		var canv = document.getElementById('h2canvas');
+		//var content = canv.toDataURL("image/png");
+		// Creates a new file (or updates it if the file already exists)
+		// with the content provided
+		/* repository.write(
+		   'master', // e.g. 'master'
+		   'images/image_1.png', // e.g. 'blog/index.md'
+		   content, // e.g. 'Hello world, this is my new content'
+		   'Web submitted image', // e.g. 'Created new index'
+		   function(err) {
+			   alert('error');
+		   }
+		);
+		*/
+		ajaxPushImage(canv);
+	}
 </script>
 
 
 
-<h1>Result</h1>
+	<h1>Result</h1>
 	<div class="card-container" id="capture">
 
 		<div class="card-background">
@@ -34,13 +107,17 @@
 
 				<div class="frame-header">
 					<h1 class="name" th:text="${encounterValue.name}">Name</h1>
-						
-					<i th:text=" '(' + ${encounterValue.type} + ')'">(type)</i> <i class="ms ms-g" id="mana-icon"></i>
+
+					<i th:text=" '(' + ${encounterValue.type} + ')'">(type)</i> <i
+						class="ms ms-g" id="mana-icon"></i>
 				</div>
 
 				<!-- Direct link to image art contained in double quotes -->
-				<img class="frame-art" th:src="${encounterValue.background}"
-					alt="art">
+				<img id="frame" class="frame-art" alt="art"
+					th:src="${encounterValue.background}">
+
+
+				<div id="divFrame"></div>
 
 				<div class="frame-type-line">
 					<h1 class="type" th:text="${encounterValue.rarity}">
@@ -49,7 +126,9 @@
 
 					</h1>
 
-					<h1 class="type" th:text="'&#9829;' + ${encounterValue.toughness} + '&#9876;' + ${encounterValue.power}"> &#9829;1 &#9876; 1</h1>
+					<h1 class="type"
+						th:text="'&#9829;' + ${encounterValue.toughness} + '&#9876;' + ${encounterValue.power}">
+						&#9829;1 &#9876; 1</h1>
 
 				</div>
 
@@ -57,7 +136,8 @@
 				classes: description, flavour-text
 			  -->
 				<div class="frame-text-box">
-					<p class="description ftb-inner-margin" th:text="${encounterValue.description}"></p>
+					<p class="description ftb-inner-margin"
+						th:text="${encounterValue.description}"></p>
 					<p class="flavour-text" th:text="${encounterValue.flavor}"></p>
 				</div>
 
@@ -70,11 +150,10 @@
 						</p>
 
 						<p>
-							TST &#x2022; <img class="paintbrush"
-								src="https://image.ibb.co/e2VxAS/paintbrush_white.png"
-								alt="paintbrush icon">
+							TST &#x2022;
 							<!-- Artist Name -->
-							 <p th:text="${encounterValue.artist}" th:remove="tag"> Artist Name </p>
+						<p th:text="${encounterValue.artist}" th:remove="tag">Artist
+							Name</p>
 						</p>
 					</div>
 
@@ -89,7 +168,9 @@
 		</div>
 
 	</div>
-	
-	<input type="button" value="Save" onclick="captureCard()" /><br/>
-	
+
+	<input type="button" value="Save" onclick="captureCard()" />
+	<input type="button" value="Submit" onclick="pushImage()" />
+	<br />
+
 </body>
