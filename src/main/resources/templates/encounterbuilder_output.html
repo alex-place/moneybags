@@ -18,14 +18,13 @@
 	
 	function ajaxPushImage(canvas){
 		
-		var data = 'canvas='
-            + encodeURIComponent(canvas)
-            ;
+		var data = 'canvas='+encodeURIComponent(canvas);
 		
 		 $.ajax({
              url : 'encounterbuilder/push',
              data : data,
-             type : "GET",
+             cache: false,
+             type : "POST",
 
              success : function(response) {
                  alert( response );
@@ -79,7 +78,7 @@
 	
 	function pushImage(){
 		var canv = document.getElementById('h2canvas');
-		//var content = canv.toDataURL("image/png");
+		var content = canv.toDataURL("image/png");
 		// Creates a new file (or updates it if the file already exists)
 		// with the content provided
 		/* repository.write(
@@ -92,7 +91,7 @@
 		   }
 		);
 		*/
-		ajaxPushImage(canv);
+		ajaxPushImage(content);
 	}
 </script>
 
