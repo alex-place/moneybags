@@ -6,14 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Base64;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.kohsuke.github.GHCommitBuilder;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHTree;
-import org.kohsuke.github.GitHub;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aeplace.moneybag.util.Utility;
 import com.aeplace.moneybag.value.EncounterValue;
 
 @Controller
@@ -34,20 +30,6 @@ public class MainController {
 	@GetMapping("/test")
 	public String testForm(Model model) throws IOException {
 		model.addAttribute("encounterValue", new EncounterValue());
-		String user = "alex-place";
-		String oath = "b827cb073e1c75378b8f2225010c20ff24e121fa";
-		String passwd;
-		GitHub github = GitHub.connect(user, oath);
-		GHRepository repo = github.getRepository("alex-place/moneybags");
-		GHCommitBuilder builder = repo.createCommit();
-		builder.author("user-submitted", "noresponse", new Date());
-		builder.committer("api", "noresponse", new Date());
-		builder.message("user submitted image");
-		builder.tree("8e2e1cbf49590828e1ea6c22f171562a5b2fd2eb");
-		builder.create();
-		
-		
-		
 		return "encounterbuilder";
 	}
 
@@ -98,6 +80,14 @@ public class MainController {
 		String response = "";
 		// Process the request
 		// Prepare the response string
+
+		try {
+			Utility.submitCard(canvas);
+			response = "success";
+		} catch (IOException e) {
+			e.printStackTrace();
+			response = "failure";
+		}
 		return response;
 	}
 
