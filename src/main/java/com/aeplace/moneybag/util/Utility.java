@@ -35,7 +35,7 @@ public class Utility {
 		String username = "alex-place";
 		String repoName = "moneybags";
 		GitHubClient client = new GitHubClient();
-		client.setOAuth2Token("bc82ad356013362013367ab38f3303d5b94e6ba1");
+		client.setOAuth2Token("<token>");
 
 		// create needed services
 		RepositoryService repositoryService = new RepositoryService();
