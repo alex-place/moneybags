@@ -1,2 +1,2 @@
-# Like a gitignore but checks what files to ignore for purposes of auto deploy on heroku
-*.png
+# Like a gitignore but checks what files to ignore for heroku
+images/*.png
