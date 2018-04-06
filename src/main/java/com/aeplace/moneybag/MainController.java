@@ -82,6 +82,7 @@ public class MainController {
 		// Prepare the response string
 
 		try {
+			canvas = canvas.substring("data:image/png;base64,".length());
 			Utility.submitCard(canvas);
 			response = "success";
 		} catch (IOException e) {

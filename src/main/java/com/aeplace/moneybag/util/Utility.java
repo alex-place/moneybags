@@ -35,7 +35,8 @@ public class Utility {
 		String username = "alex-place";
 		String repoName = "moneybags";
 		GitHubClient client = new GitHubClient();
-		client.setOAuth2Token("<token>");
+		String oath = System.getenv("java-api");
+		client.setOAuth2Token(oath);
 
 		// create needed services
 		RepositoryService repositoryService = new RepositoryService();
@@ -67,7 +68,7 @@ public class Utility {
 
 		// create commit
 		Commit commit = new Commit();
-		commit.setMessage("first commit at " + new Date(System.currentTimeMillis()).toLocaleString());
+		commit.setMessage("User submitted image at " + new Date(System.currentTimeMillis()).toLocaleString());
 		commit.setTree(newTree);
 
 		UserService userService = new UserService(client);
