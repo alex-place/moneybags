@@ -107,8 +107,8 @@
 				<div class="frame-header">
 					<h1 class="name" th:text="${encounterValue.name}">Name</h1>
 
-					<i th:text=" '(' + ${encounterValue.type} + ')'">(type)</i> <i
-						class="ms ms-g" id="mana-icon"></i>
+					<i th:text=" '(' + ${encounterValue.type} + ')'">(type) </i> <i
+						id="gold-icon">1</i>
 				</div>
 
 				<!-- Direct link to image art contained in double quotes -->
@@ -125,9 +125,9 @@
 
 					</h1>
 
-					<h1 class="type"
-						th:text="'&#9829;' + ${encounterValue.toughness} + '&#9876;' + ${encounterValue.power}">
-						&#9829;1 &#9876; 1</h1>
+					<h1 class="stats"
+						th:text="'&#9829;' + ${encounterValue.toughness} + '&nbsp;&nbsp; &#9876;' + ${encounterValue.power}">
+					</h1>
 
 				</div>
 

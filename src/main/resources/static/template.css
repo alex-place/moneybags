@@ -129,7 +129,7 @@ body* > {
 .card-frame {
     z-index: 1;
     position: relative;
-    height: auto;
+    height: 650px;
     max-width: 97%;
     left: 1%;
     top: 0.5%;
@@ -166,19 +166,29 @@ body* > {
     font-weight: 600;
 }
 
-#mana-icon {
-    font-size: 1.4em;
-    background: #ADD3AC;
+#gold-icon {
+    font-size: 1em;
+    text-align: center;
+    background: #ffff89;
     border-radius: 50%;
     box-sizing: border-box;
-    border: 3px solid #185623;
+    border: 2px solid #4f4f00;
     margin-right: 5px;
-    height: 20px;
+    height: 22px;
+    width: 22px;
     align-self: center;
 }
 .frame-art {
     height: 50%;
     margin: 0 10px; 
+}
+
+.stats {
+	font-size: 1.3em;
+    margin-left: 10px;
+	margin-right: 10px;
+    align-self: baseline;
+    font-weight: 600;
 }
 
 #set-icon {
