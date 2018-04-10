@@ -1,9 +1,17 @@
 package com.aeplace.moneybag.value;
 
-public class EncounterValue {
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+public class EncounterForm {
+
+	@NotEmpty
 	private String name;
+	@Size(min=0, max=10)
+	private String gold;
 	private String type;
+	@NotEmpty
 	private String background;
 	private String rarity;
 	private int toughness;
@@ -12,7 +20,7 @@ public class EncounterValue {
 	private String flavor;
 	private String print;
 	private String collection;
-	private String collectionUrl;
+	@NotNull
 	private String artist;
 
 	public String getName() {
@@ -21,6 +29,14 @@ public class EncounterValue {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getGold() {
+		return gold;
+	}
+
+	public void setGold(String gold) {
+		this.gold = gold;
 	}
 
 	public String getType() {
@@ -45,14 +61,6 @@ public class EncounterValue {
 
 	public void setCollection(String collection) {
 		this.collection = collection;
-	}
-
-	public String getCollectionUrl() {
-		return collectionUrl;
-	}
-
-	public void setCollectionUrl(String collectionUrl) {
-		this.collectionUrl = collectionUrl;
 	}
 
 	public String getArtist() {

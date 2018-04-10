@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Select Option Example 1</title>
+</head>
+<body>
+    <h2>Select Option Example 1</h2>
+ 
+ 
+ 
+    <form name='f' th:object="encounterValue" method='POST'>
+        <table>
+            <tr>
+                <td>Select Country:</td>
+                <td>
+                    <select th:field="*{rarity}">
+                         <option value=""> -- </option>
+                         <option th:each="rarity : ${rarity}"
+                            th:value="${rarity.id}"
+                            th:utext="${rarity.value}"/>
+                  </select>
+ 
+                </td>
+            </tr>
+         
+            <tr>
+                <td><input name="submit" type="submit" value="submit" /></td>
+            </tr>
+        </table>
+    </form>
+ 
+</body>
+ 
+</html>

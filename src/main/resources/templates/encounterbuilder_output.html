@@ -38,7 +38,7 @@
 	function addBackground(){
 		/*<![CDATA[*/
 		
-		    var url = /*[[${encounterValue.background}]]*/ 'default';
+		    var url = /*[[${encounterForm.background}]]*/ 'default';
 			var img = new Image();
 			img.crossOrigin = "anonymous";
 			img.src = url;
@@ -105,28 +105,28 @@
 			<div class="card-frame">
 
 				<div class="frame-header">
-					<h1 class="name" th:text="${encounterValue.name}">Name</h1>
+					<h1 class="name" th:text="${encounterForm.name}">Name</h1>
 
-					<i th:text=" '(' + ${encounterValue.type} + ')'">(type) </i> <i
-						id="gold-icon">1</i>
+					<i th:text=" '(' + ${encounterForm.type} + ')'">(type) </i> 
+					<i id="gold-icon" th:text="${encounterForm.gold}">1</i>
 				</div>
 
 				<!-- Direct link to image art contained in double quotes -->
 				<img id="frame" class="frame-art" alt="art"
-					th:src="${encounterValue.background}">
+					th:src="${encounterForm.background}">
 
 
 				<div id="divFrame"></div>
 
 				<div class="frame-type-line">
-					<h1 class="type" th:text="${encounterValue.rarity}">
+					<h1 class="type" th:text="${encounterForm.rarity}">
 						<!-- Card Type -->
 						Common Creature
 
 					</h1>
 
 					<h1 class="stats"
-						th:text="'&#9829;' + ${encounterValue.toughness} + '&nbsp;&nbsp; &#9876;' + ${encounterValue.power}">
+						th:text="'&#9829;' + ${encounterForm.toughness} + '&nbsp;&nbsp; &#9876;' + ${encounterForm.power}">
 					</h1>
 
 				</div>
@@ -136,14 +136,14 @@
 			  -->
 				<div class="frame-text-box">
 					<p class="description ftb-inner-margin"
-						th:text="${encounterValue.description}"></p>
-					<p class="flavour-text" th:text="${encounterValue.flavor}"></p>
+						th:text="${encounterForm.description}"></p>
+					<p class="flavour-text" th:text="${encounterForm.flavor}"></p>
 				</div>
 
 				<div class="frame-bottom-info inner-margin">
 					<div class="fbi-left">
 
-						<p th:text="${encounterValue.print}">
+						<p th:text="${encounterForm.print}">
 							<!-- Print Run -->
 							1st Ed Test Run
 						</p>
@@ -151,14 +151,14 @@
 						<p>
 							TST &#x2022;
 							<!-- Artist Name -->
-						<p th:text="${encounterValue.artist}" th:remove="tag">Artist
+						<p th:text="${encounterForm.artist}" th:remove="tag">Artist
 							Name</p>
 						</p>
 					</div>
 
 					<div class="fbi-center"></div>
 
-					<div class="fbi-right">&#x99; &amp; &#169; 2018 Project
+					<div class="fbi-right">&#x99; &amp; &#169; 2018 <br/> Project
 						Moneybags</div>
 				</div>
 

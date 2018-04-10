@@ -12,35 +12,64 @@
 		<p>
 			Name: <input type="text" th:field="*{name}" />
 		</p>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
 		<p>
-			Type: <input type="text" th:field="*{type}" />
+			Gold Value: <select th:field="*{gold}">
+				<option value="">--</option>
+				<option th:each="gold : ${gold}"
+						th:value="${gold}"
+						th:utext="${gold}" />
+			</select>
 		</p>
 		<p>
-			Background: <input type="text" th:field="*{background}" />
+			Creature Type: <select th:field="*{type}">
+				<option value="">--</option>
+				<option th:each="type : ${type}"
+						th:value="${type}"
+						th:utext="${type}" />
+			</select>
 		</p>
+
 		<p>
-			Rarity: <input type="text" th:field="*{rarity}" />
+			Difficulty: <select th:field="*{rarity}">
+				<option value="">--</option>
+				<option th:each="rarity : ${rarity}"
+						th:value="${rarity}"
+						th:utext="${rarity}" />
+			</select>
 		</p>
+		
 		<p>
-			Toughness: <input type="text" th:field="*{toughness}" />
+			Background URL: <input type="text" th:field="*{background}" />
+		</p>
+		
+		<p>
+			Toughness (Health): <input type="text" th:field="*{toughness}" />
 		</p>
 		<p>
 			Power: <input type="text" th:field="*{power}" />
 		</p>
 		<p>
-			Description: <input type="text" th:field="*{description}" />
+			Ability Description: <input type="text" th:field="*{description}" />
 		</p>
 		<p>
-			Flavor: <input type="text" th:field="*{flavor}" />
+			Flavor Text: <input type="text" th:field="*{flavor}" />
 		</p>
 		<p>
-			Print: <input type="text" th:field="*{print}" />
+			Print Run: <select th:field="*{print}">
+				<option value="">--</option>
+				<option th:each="print : ${print}"
+						th:value="${print}"
+						th:utext="${print}" />
+			</select>
 		</p>
 		<p>
-			Collection: <input type="text" th:field="*{collection}" />
-		</p>
-		<p>
-			Collection Icon Url: <input type="text" th:field="*{collectionUrl}" />
+			Collection Set: <select th:field="*{collection}">
+				<option value="">--</option>
+				<option th:each="collection : ${collection}"
+						th:value="${collection}"
+						th:utext="${collection}" />
+			</select>
 		</p>
 		<p>
 			Artist Name: <input type="text" th:field="*{artist}" />
