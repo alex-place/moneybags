@@ -7,6 +7,7 @@
 		var url = document.getElementById("background").value;
 		var img = document.createElement("img");
 		img.src = url;
+		img.className = "preview";
 		var image = document.getElementById("preview");
 		image.innerHTML = '';
 		image.appendChild(img);
@@ -57,7 +58,7 @@
 			Background URL: <input type="url" id="background" th:field="*{background}" onchange="updatePreview()"/>
 		</p>
 		
-		<div id="preview"></div>
+		<div id="preview" class="preview"></div>
 		
 		<p>
 			Toughness (Health): <input type="text" th:field="*{toughness}" />

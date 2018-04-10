@@ -111,6 +111,10 @@ fieldset {
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
+.preview {
+	max-width: 100%;
+}
+
 .frame input:focus,
 .frame textarea:focus {
   outline: 0;
