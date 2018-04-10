@@ -35,7 +35,7 @@ public class MainController {
 	public String greetingForm(Model model) {
 		model.addAttribute("encounterValue", new EncounterForm());
 		
-		List rarity = new ArrayList(Arrays.asList(new String[]{"Easy Creature", "Medium Creature"}));
+		List rarity = new ArrayList(Arrays.asList(new String[]{"Easy Creature", "Medium Creature", "Hard Creature", "Legendary Creature"}));
 		model.addAttribute("rarity", rarity);
 		
 		List types = new ArrayList(Arrays.asList(new String[]{"Undead", "Beast", "Monstrosity", "Humanoid", "Elemental"}));
