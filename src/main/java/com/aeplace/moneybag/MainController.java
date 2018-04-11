@@ -13,6 +13,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +31,9 @@ import com.aeplace.moneybag.value.EncounterForm;
 
 @Controller
 public class MainController {
+	
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 
 	@CrossOrigin(origins = "*")
 	@GetMapping("/encounterbuilder")
@@ -58,9 +63,9 @@ public class MainController {
 		EncounterForm encounter = new EncounterForm();
 		model.addAttribute("encounter", encounter);
 		
-//		List<Item> rarity = EncounterSelection.getRarities();
-		List rarity = new ArrayList(Arrays.asList(new String[]{"Easy Creature", "Medium Creature"}));
-		model.addAttribute("rarity", rarity);
+//		jdbcTemplate.execute("DROP TABLE customers IF EXISTS");
+        jdbcTemplate.execute("CREATE TABLE customers(" +
+                "id SERIAL, first_name VARCHAR(255), last_name VARCHAR(255))");
 		
 		return "test";
 	}
