@@ -23,6 +23,9 @@ import org.eclipse.egit.github.core.service.DataService;
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.eclipse.egit.github.core.service.UserService;
 
+import com.aeplace.moneybag.value.EncounterForm;
+import com.google.gson.Gson;
+
 public class Utility {
 	
 	static{
@@ -31,7 +34,7 @@ public class Utility {
 		
 	}
 
-	public static void submitCard(String image) throws IOException{
+	public static void submitCard(String name,String image) throws IOException{
 		String username = "alex-place";
 		String repoName = "moneybags";
 		GitHubClient client = new GitHubClient();
@@ -57,7 +60,7 @@ public class Utility {
 
 		// create new tree entry
 		TreeEntry treeEntry = new TreeEntry();
-		treeEntry.setPath("images/card_" + System.currentTimeMillis() + ".png");
+		treeEntry.setPath("images/card_" + name + ".png");
 		treeEntry.setMode(TreeEntry.MODE_BLOB);
 		treeEntry.setType(TreeEntry.TYPE_BLOB);
 		treeEntry.setSha(blob_sha);
@@ -69,6 +72,80 @@ public class Utility {
 		// create commit
 		Commit commit = new Commit();
 		commit.setMessage("User submitted image at " + new Date(System.currentTimeMillis()).toLocaleString());
+		commit.setTree(newTree);
+
+		UserService userService = new UserService(client);
+		User user = userService.getUser();
+		CommitUser author = new CommitUser();
+		author.setName(user.getName());
+		author.setName(username);
+		author.setEmail("alex.place.7@gmail.com");
+		Calendar now = Calendar.getInstance();
+		author.setDate(now.getTime());
+		commit.setAuthor(author);
+		commit.setCommitter(author);
+
+		List<Commit> listOfCommits = new ArrayList<Commit>();
+		listOfCommits.add(new Commit().setSha(baseCommitSha));
+		// listOfCommits.containsAll(base_commit.getParents());
+		commit.setParents(listOfCommits);
+		// commit.setSha(base_commit.getSha());
+		Commit newCommit = dataService.createCommit(repository, commit);
+
+		// create resource
+		TypedResource commitResource = new TypedResource();
+		commitResource.setSha(newCommit.getSha());
+		commitResource.setType(TypedResource.TYPE_COMMIT);
+		commitResource.setUrl(newCommit.getUrl());
+
+		// get master reference and update it
+		Reference reference = dataService.getReference(repository, "heads/master");
+		reference.setObject(commitResource);
+		dataService.editReference(repository, reference, true);
+		System.out.println("Committed URL: " + newCommit.getUrl());
+	}
+
+	public static void saveCardData(EncounterForm encounterValue) throws IOException {
+		Gson gson = new Gson();
+		String json = gson.toJson(encounterValue);	
+		
+		String username = "alex-place";
+		String repoName = "moneybags";
+		GitHubClient client = new GitHubClient();
+		String oath = System.getenv("java-api");
+		client.setOAuth2Token(oath);
+
+		// create needed services
+		RepositoryService repositoryService = new RepositoryService();
+		CommitService commitService = new CommitService(client);
+		DataService dataService = new DataService(client);
+
+		// get some sha's from current state in git
+		Repository repository = repositoryService.getRepository(username, repoName);
+		String baseCommitSha = repositoryService.getBranches(repository).get(0).getCommit().getSha();
+		RepositoryCommit baseCommit = commitService.getCommit(repository, baseCommitSha);
+		String treeSha = baseCommit.getSha();
+
+		// create new blob with data
+		Blob blob = new Blob();
+		blob.setContent(json).setEncoding(Blob.ENCODING_UTF8);
+		String blob_sha = dataService.createBlob(repository, blob);
+		Tree baseTree = dataService.getTree(repository, treeSha);
+
+		// create new tree entry
+		TreeEntry treeEntry = new TreeEntry();
+		treeEntry.setPath("data/card_" + encounterValue.getName() + ".json");
+		treeEntry.setMode(TreeEntry.MODE_BLOB);
+		treeEntry.setType(TreeEntry.TYPE_BLOB);
+		treeEntry.setSha(blob_sha);
+		treeEntry.setSize(blob.getContent().length());
+		Collection<TreeEntry> entries = new ArrayList<TreeEntry>();
+		entries.add(treeEntry);
+		Tree newTree = dataService.createTree(repository, entries, baseTree.getSha());
+
+		// create commit
+		Commit commit = new Commit();
+		commit.setMessage("User submitted data at " + new Date(System.currentTimeMillis()).toLocaleString());
 		commit.setTree(newTree);
 
 		UserService userService = new UserService(client);

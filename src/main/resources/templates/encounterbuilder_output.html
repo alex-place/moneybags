@@ -17,8 +17,12 @@
 	
 	
 	function ajaxPushImage(canvas){
-		
-		var data = 'canvas='+encodeURIComponent(canvas);
+		/*<![CDATA[*/
+			var name = /*[[${encounterForm.name}]]*/ 'default';
+		/*]]>*/
+
+			
+		var data ='canvas=' + name + ',' + encodeURIComponent(canvas);
 		
 		 $.ajax({
              url : 'encounterbuilder/push',

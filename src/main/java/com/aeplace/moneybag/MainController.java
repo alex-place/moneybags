@@ -13,8 +13,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,8 +30,6 @@ import com.aeplace.moneybag.value.EncounterForm;
 @Controller
 public class MainController {
 	
-	@Autowired
-	JdbcTemplate jdbcTemplate;
 
 	@CrossOrigin(origins = "*")
 	@GetMapping("/encounterbuilder")
@@ -63,21 +59,20 @@ public class MainController {
 		EncounterForm encounter = new EncounterForm();
 		model.addAttribute("encounter", encounter);
 		
-//		jdbcTemplate.execute("DROP TABLE customers IF EXISTS");
-        jdbcTemplate.execute("CREATE TABLE customers(" +
-                "id SERIAL, first_name VARCHAR(255), last_name VARCHAR(255))");
 		
 		return "test";
 	}
 
 	@CrossOrigin(origins = "*")
 	@PostMapping("/encounterbuilder")
-	public String greetingSubmit(HttpServletRequest request, @Valid EncounterForm encounterValue, BindingResult result)
+	public String cardSubmit(HttpServletRequest request, @Valid EncounterForm encounterValue, BindingResult result)
 			throws IOException {
 
 		if(result.hasErrors()){
 			return "redirect:/encounterbuilder";
 		}
+		
+		Utility.saveCardData(encounterValue);
 		
 		URL url = new URL(encounterValue.getBackground());
 		InputStream in = new BufferedInputStream(url.openStream());
@@ -93,17 +88,6 @@ public class MainController {
 
 		String tmp = "data:image/png;base64," + Base64.getEncoder().encodeToString(response);
 
-		// //String phyPath =
-		// request.getSession().getServletContext().getRealPath("/");
-		// String phyPath = "/tmp";
-		// String newUrl = phyPath + "/tempimage" + new Random().nextInt(999) +
-		// ".jpg";
-		// File file = new File(newUrl);
-		//
-		// FileOutputStream fos = new FileOutputStream(file);
-		// fos.write(response);
-		// fos.close();
-
 		encounterValue.setBackground(tmp);
 		return "encounterbuilder_output";
 	}
@@ -111,13 +95,11 @@ public class MainController {
 	@RequestMapping(value = "/encounterbuilder/push", method = RequestMethod.POST)
 	public @ResponseBody String processAJAXRequest(@RequestParam("canvas") String canvas) throws IOException {
 
+		String name = canvas.substring(0, canvas.indexOf(","));
 		String response = "";
-		// Process the request
-		// Prepare the response string
-
 		try {
 			canvas = canvas.substring("data:image/png;base64,".length());
-			Utility.submitCard(canvas);
+			Utility.submitCard(name,canvas);
 			response = "success";
 		} catch (IOException e) {
 			e.printStackTrace();
