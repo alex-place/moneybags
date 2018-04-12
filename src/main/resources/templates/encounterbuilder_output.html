@@ -2,7 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="template.css">
 <script type="text/javascript" src="html2canvas.min.js"></script>
-<script type="text/javascript" src="github.bundle.js"></script>
 <script type="text/javascript" src="jquery-3.3.1.min.js"></script>
 <head>
 <title>Encounter Builder</title>
@@ -54,17 +53,6 @@
 		
 	}
 		
-	//Creates a new instance of the Github object exposed by Github.js
-	var github = new GitHub({
-	  username: 'alex-place',
-	  password: 'Infected1',
-	  auth: 'basic'
-	});
-	
-	 
-	// Creates an object representing the repository you want to work with
-	var repository = github.getRepo('alex-place', 'moneybags');
-	
 	function captureCard(){
 		html2canvas(document.querySelector("#capture"),
 				{allowTaint: false}
