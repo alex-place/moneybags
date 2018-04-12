@@ -29,28 +29,30 @@ import com.aeplace.moneybag.value.EncounterForm;
 
 @Controller
 public class MainController {
-	
 
 	@CrossOrigin(origins = "*")
 	@GetMapping("/encounterbuilder")
 	public String greetingForm(Model model) {
 		model.addAttribute("encounterValue", new EncounterForm());
-		
-		List rarity = new ArrayList(Arrays.asList(new String[]{"Easy Creature", "Medium Creature", "Hard Creature", "Legendary Creature"}));
+
+		List rarity = new ArrayList(Arrays
+				.asList(new String[] { "Easy Creature", "Medium Creature", "Hard Creature", "Legendary Creature" }));
 		model.addAttribute("rarity", rarity);
-		
-		List types = new ArrayList(Arrays.asList(new String[]{"Undead", "Beast", "Monstrosity", "Humanoid", "Elemental"}));
+
+		List types = new ArrayList(
+				Arrays.asList(new String[] { "Undead", "Beast", "Monstrosity", "Humanoid", "Elemental" }));
 		model.addAttribute("type", types);
-		
-		List prints = new ArrayList(Arrays.asList(new String[]{"1st Ed", "2nd Ed"}));
+
+		List prints = new ArrayList(Arrays.asList(new String[] { "1st Ed", "2nd Ed" }));
 		model.addAttribute("print", prints);
-		
-		List collections = new ArrayList(Arrays.asList(new String[]{"TST", "PMB"}));
+
+		List collections = new ArrayList(Arrays.asList(new String[] { "TST", "PMB" }));
 		model.addAttribute("collection", collections);
-		
-		List gold = new ArrayList(Arrays.asList(new String[]{"0","1","2","3","4","5","6","7","8","9","10"}));
+
+		List gold = new ArrayList(
+				Arrays.asList(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
 		model.addAttribute("gold", gold);
-		
+
 		return "encounterbuilder";
 	}
 
@@ -58,8 +60,7 @@ public class MainController {
 	public String selectOptionExample1Page(Model model) {
 		EncounterForm encounter = new EncounterForm();
 		model.addAttribute("encounter", encounter);
-		
-		
+
 		return "test";
 	}
 
@@ -68,12 +69,12 @@ public class MainController {
 	public String cardSubmit(HttpServletRequest request, @Valid EncounterForm encounterValue, BindingResult result)
 			throws IOException {
 
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			return "redirect:/encounterbuilder";
 		}
 		
-		Utility.saveCardData(encounterValue);
-		
+		Utility.addToMap(encounterValue);
+
 		URL url = new URL(encounterValue.getBackground());
 		InputStream in = new BufferedInputStream(url.openStream());
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -98,9 +99,10 @@ public class MainController {
 		String name = canvas.substring(0, canvas.indexOf(","));
 		String response = "";
 		try {
-			canvas = canvas.substring("data:image/png;base64,".length());
-			Utility.submitCard(name,canvas);
-			response = "success";
+			int text = "data:image/png;base64,".length() + name.length() + 1;
+			canvas = canvas.substring(text);
+			boolean success = Utility.submitCard(name, canvas);
+			response = success == true ? "success" : "failure";
 		} catch (IOException e) {
 			e.printStackTrace();
 			response = "failure";
