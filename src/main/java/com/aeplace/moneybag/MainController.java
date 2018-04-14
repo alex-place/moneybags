@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +58,30 @@ public class MainController {
 	}
 
 	@RequestMapping(value = { "/test" }, method = RequestMethod.GET)
+	public String commitDeck(Model model) throws URISyntaxException {
+		EncounterForm encounter = new EncounterForm();
+		model.addAttribute("encounter", encounter);
+
+		try {
+			
+			String path = "C:/Users/Alex/Documents/Github/moneybags/images";
+			
+			String gitPath = "https://raw.githubusercontent.com/alex-place/moneybags/master/decks";
+			
+			String encoded = Utility.compileCards(path);
+			if (encoded != null) {
+				Utility.submitDeck("encounter", encoded);
+				System.out.println("success");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("failure");
+		}
+		return "test";
+
+	}
+
+	@RequestMapping(value = { "/test" }, method = RequestMethod.GET)
 	public String selectOptionExample1Page(Model model) {
 		EncounterForm encounter = new EncounterForm();
 		model.addAttribute("encounter", encounter);
@@ -72,7 +97,7 @@ public class MainController {
 		if (result.hasErrors()) {
 			return "redirect:/encounterbuilder";
 		}
-		
+
 		Utility.addToMap(encounterValue);
 
 		URL url = new URL(encounterValue.getBackground());
