@@ -229,6 +229,8 @@ public class Utility {
 		BufferedImage combined = new BufferedImage(5000, 4900, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = combined.getGraphics();
 
+		path = "images";
+
 		File[] files = new File(path).listFiles();
 		// If this pathname does not denote a directory, then listFiles()
 		// returns null.
@@ -250,9 +252,10 @@ public class Utility {
 
 		Iterator<BufferedImage> iterator = images.iterator();
 
-		//First card must be the card back which gets drawn at the bottom right of the template
+		// First card must be the card back which gets drawn at the bottom right
+		// of the template
 		g.drawImage(iterator.next(), xShift * 9, yShift * 6, null);
-		
+
 		for (int y = 0; y < 7; y++) {
 			for (int x = 0; x < 10; x++) {
 

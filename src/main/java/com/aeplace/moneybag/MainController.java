@@ -2,6 +2,7 @@ package com.aeplace.moneybag;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -57,14 +58,15 @@ public class MainController {
 		return "encounterbuilder";
 	}
 
-	@RequestMapping(value = { "/test" }, method = RequestMethod.GET)
+	@GetMapping("/deck" )
 	public String commitDeck(Model model) throws URISyntaxException {
 		EncounterForm encounter = new EncounterForm();
 		model.addAttribute("encounter", encounter);
 
 		try {
 			
-			String path = "C:/Users/Alex/Documents/Github/moneybags/images";
+			String path = "images";
+			System.out.println(new File(".").getCanonicalPath());
 			
 			String gitPath = "https://raw.githubusercontent.com/alex-place/moneybags/master/decks";
 			
@@ -77,7 +79,7 @@ public class MainController {
 			e.printStackTrace();
 			System.out.println("failure");
 		}
-		return "test";
+		return "redirect:/encounterbuilder";
 
 	}
 
