@@ -95,7 +95,7 @@ public class Utility {
 
 				// create commit
 				Commit commit = new Commit();
-				commit.setMessage("User submitted image at " + new Date(System.currentTimeMillis()).toLocaleString());
+				commit.setMessage(name + ": User submitted image at " + new Date(System.currentTimeMillis()).toLocaleString());
 				commit.setTree(newTree);
 
 				UserService userService = new UserService(client);
