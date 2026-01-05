@@ -1,0 +1,84 @@
+# Gradle
+.gradle/
+build/
+!build/libs/*.jar
+.gradletasknamecache
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# Maven (in case someone has both)
+target/
+pom.xml
+.mvn/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+.vscode/
+*.swp
+*.swo
+out/
+bin/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+CHANGELOG.md
+docs/
+*.md
+
+# Test files
+src/test/
+test/
+
+# Log files
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Docker files
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Fly.io
+fly.toml
+
+# Environment files
+.env
+.env.*
+application-local.yml
+application-local.properties
+
+# Node (in case of frontend assets)
+node_modules/
+npm-debug.log
+yarn.lock
+package-lock.json
