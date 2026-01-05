@@ -1,49 +1,55 @@
-# Stage 1: Build the application
-FROM gradle:8.5-jdk17 AS build
+# syntax=docker/dockerfile:1.6
 
-# Set the working directory
+########################################
+# Stage 1: Build
+########################################
+FROM eclipse-temurin:17-jdk AS build
+
 WORKDIR /app
 
-# Copy Gradle configuration files first to leverage Docker cache
+# Copy only files needed to resolve dependencies first
+COPY gradlew .
+COPY gradle gradle
 COPY build.gradle settings.gradle ./
-COPY gradle ./gradle
 
-# Download dependencies - this layer will be cached unless build.gradle changes
-RUN gradle dependencies --no-daemon
+# Make gradlew executable
+RUN chmod +x gradlew
 
-# Copy the source code
-COPY src ./src
+# Download dependencies (cached)
+RUN --mount=type=cache,target=/root/.gradle \
+    ./gradlew --no-daemon dependencies
+
+# Copy source last (invalidates cache only when code changes)
+COPY src src
 
 # Build the application
-RUN gradle build -x test --no-daemon
+RUN --mount=type=cache,target=/root/.gradle \
+    ./gradlew --no-daemon build -x test
 
-# Stage 2: Create the runtime image
+
+########################################
+# Stage 2: Runtime
+########################################
 FROM eclipse-temurin:17-jre-alpine
 
-# Install dumb-init for proper signal handling
+# Install dumb-init
 RUN apk add --no-cache dumb-init
 
-# Create a non-root user to run the application
-RUN addgroup -g 1000 spring && adduser -u 1000 -G spring -s /bin/sh -D spring
+# Create non-root user
+RUN addgroup -S spring && adduser -S spring -G spring
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the JAR file from the build stage
+# Copy built jar
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Change ownership of the application files
+# Fix ownership
 RUN chown -R spring:spring /app
 
-# Switch to the non-root user
-USER spring:spring
+USER spring
 
-# Expose the port Spring Boot runs on
 ENV PORT=8080
-EXPOSE $PORT
+EXPOSE 8080
 
-# Use dumb-init to run the application
 ENTRYPOINT ["dumb-init", "--"]
-
-# Run the Spring Boot application
-CMD ["java", "-Xmx512m", "-Dserver.port=${PORT}", "-jar", "app.jar"]
+CMD ["java", "-Xmx512m", "-jar", "app.jar"]
